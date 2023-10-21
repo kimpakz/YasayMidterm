@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Enrollee Registration</title>
+      <style>
+         body {
+         	font-family: Arial, sans-serif;
+         }
+         h1 {
+         	text-align: center;
+         	margin-bottom: 30px;
+         }
+         form {
+         	max-width: 500px;
+         	margin: auto;
+         	border: 1px solid #ddd;
+         	padding: 20px;
+         	border-radius: 5px;
+         }
+         .form-group {
+         	margin-bottom: 20px;
+         }
+         label {
+         	display: inline-block;
+         	margin-bottom: 5px;
+         }
+         input,
+         select {
+         	padding: 5px;
+         	border-radius: 5px;
+         	border: 1px solid #ddd;
+         	width: 100%;
+         	font-size: 16px;
+         }
+         input[type="submit"] {
+         	background-color: #101011;
+         	color: #fff;
+         }
+         table {
+         	margin-top: 20px;
+         	border-collapse: collapse;
+         	width: 100%;
+         }
+         th,
+         td {
+         	padding: 10px;
+         	border: 1px solid #ddd;
+         	text-align: left;
+         }
+         th {
+         	background-color: #0d0d0e;
+         	color: #fff;
+         }
+         input[type="search"] {
+         	padding: 5px;
+         	border-radius: 5px;
+         	border: 1px solid #ddd;
+         	width: 100%;
+         	font-size: 16px;
+         }
+      </style>
+   </head>
+   <body>
+      <h1>Enrollee Registration</h1>
+      <form id="enrollee-form">
+         <div class="form-group">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first-name" required>
+         </div>
+         <div class="form-group">
+            <label for="middle-name">Middle Name:</label>
+            <input type="text" id="middle-name" name="middle-name">
+         </div>
+         <div class="form-group">
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="last-name" required>
+         </div>
+         <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+         </div>
+         <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+               <option value="male">Male</option>
+               <option value="female">Female</option>
+            </select>
+         </div>
+         <div class="form-group">
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday">
+         </div>
+         <div class="form-group">
+            <label for="course">Course:</label>
+            <input type="text" id="course" name="course" required>
+         </div>
+         <div class="form-group">
+            <label for="school-year">School Year:</label>
+            <input type="text" id="school-year" name="school-year" required>
+         </div>
+         <div class="form-group">
+            <input type="submit" value="Add Enrollee">
+         </div>
+      </form>
+      <input type="search" id="search" placeholder="Search enrollees...">
+      <table id="enrollee-table">
+         <thead>
+            <tr>
+               <th>First Name</th>
+               <th>Middle Name</th>
+               <th>Last Name</th>
+               <th>Age</th>
+               <th>Gender</th>
+               <th>Birthday</th>
+               <th>Course</th>
+               <th>School Year</th>
+               <th></th>
+            </tr>
+         </thead>
+         <tbody></tbody>
+      </table>
+      <script>
+         var enrolleeForm = document.getElementById("enrollee-form");
+         enrolleeForm.addEventListener("submit", function(event) {
+         	event.preventDefault();
+         	addEnrollee();
+         });
+         
+         var enrolleeTable = document.getElementById("enrollee-table").getElementsByTagName('tbody')[0];
+         
+         function addEnrollee() {
+         	var firstName = document.getElementById('first-name').value;
+         	var middleName = document.getElementById('middle-name').value;
+         	var lastName = document.getElementById('last-name').value;
+         	var age = document.getElementById('age').value;
+         	var gender = document.getElementById('gender').value;
+         	var birthday = document.getElementById('birthday').value;
+         	var course = document.getElementById('course').value;
+         	var schoolYear = document.getElementById('school-year').value;
+         
+         	var newRow = enrolleeTable.insertRow();
+         
+         	var firstNameCell = newRow.insertCell(0);
+         	var middleNameCell = newRow.insertCell(1);
+         	var lastNameCell = newRow.insertCell(2);
+         	var ageCell = newRow.insertCell(3);
+         	var genderCell = newRow.insertCell(4);
+         	var birthdayCell = newRow.insertCell(5);
+         	var courseCell = newRow.insertCell(6);
+         	var schoolYearCell = newRow.insertCell(7);
+         	var editCell = newRow.insertCell(8);
+         	var deleteCell = newRow.insertCell(9);
+         
+         	firstNameCell.innerHTML = firstName;
+         	middleNameCell.innerHTML = middleName;
+         	lastNameCell.innerHTML = lastName;
+         	ageCell.innerHTML = age;
+         	genderCell.innerHTML = gender;
+         	birthdayCell.innerHTML = birthday;
+         	courseCell.innerHTML = course;
+         	schoolYearCell.innerHTML = schoolYear;
+         	editCell.innerHTML = "<button onclick='editEnrollee(this)'>Edit</button>";
+         	deleteCell.innerHTML = "<button onclick='deleteEnrollee(this)'>Delete</button>";
+         
+         	enrolleeForm.reset();
+         }
+         
+         function editEnrollee(btn) {
+         	var currentRow = btn.parentNode.parentNode;
+         
+         	var firstName = currentRow.getElementsByTagName("td")[0].innerText;
+         	var middleName = currentRow.getElementsByTagName("td")[1].innerText;
+         	var lastName = currentRow.getElementsByTagName("td")[2].innerText;
+         	var age = currentRow.getElementsByTagName("td")[3].innerText;
+         	var gender = currentRow.getElementsByTagName("td")[4].innerText;
+         	var birthday = currentRow.getElementsByTagName("td")[5].innerText;
+         	var course = currentRow.getElementsByTagName("td")[6].innerText;
+         	var schoolYear = currentRow.getElementsByTagName("td")[7].innerText;
+         
+         	document.getElementById('first-name').value = firstName;
+         	document.getElementById('middle-name').value = middleName;
+         	document.getElementById('last-name').value = lastName;
+         	document.getElementById('age').value = age;
+         	document.getElementById('gender').value = gender;
+         	document.getElementById('birthday').value = birthday;
+         	document.getElementById('course').value = course;
+         	document.getElementById('school-year').value = schoolYear;
+         
+         	currentRow.remove();
+         }
+         
+         function deleteEnrollee(btn) {
+         	var row = btn.parentNode.parentNode;
+         	row.parentNode.removeChild(row);
+         }
+         
+         var searchInput = document.getElementById("search");
+         searchInput.addEventListener("input", function(event) {
+         	var searchValue = event.target.value.toLowerCase();
+         	var rows = enrolleeTable.getElementsByTagName("tr");
+         	var numberOfRows = rows.length;
+         	for (var i = 0; i < numberOfRows; i++) {
+         		var nameCells = rows[i].getElementsByTagName("td")[0];
+         		if (nameCells) {
+         			var nameText = nameCells.textContent || nameCells.innerText;
+         			if (nameText.toLowerCase().indexOf(searchValue) > -1) {
+         				rows[i].style.display = "";
+         			} else {
+         				rows[i].style.display = "none";
+         			}
+         		}
+         	}
+         });
+      </script>
+   </body>
+</html>
+
+<style>
+    body {
+        background-image: url("R.jfif");
+        background-size: cover;
+    }
+</style>
